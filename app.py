@@ -1,10 +1,10 @@
+import time
 import RPi.GPIO as GPIO
 from flask import Flask, render_template, request
 
 
 RED_PIN = 14
 YELLOW_PIN = 23
-
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -14,6 +14,35 @@ GPIO.setup(YELLOW_PIN, GPIO.OUT)
 
 
 app = Flask(__name__)
+parallel_thread = None
+
+
+def alternate_leds(red_pin, yellow_pin):
+    while(True):
+        GPIO.output(red_pin, GPIO.HIGH)
+        GPIO.output(yellow_pin, GPIO.LOW)
+
+        time.sleep(2)
+
+        GPIO.output(red_pin, GPIO.LOW)
+        GPIO.output(yellow_pin, GPIO.HIGH)
+
+
+@app.route('/led_blink', methods=['POST'])
+def led_blink():
+    if not parallel_thread.isAlive():
+            parallel_thread = Thread(target=alternate_leds, kwargs={'red_pin': RED_PIN, 'yellow_pin': YELLOW_PIN})
+
+    return "ok"
+
+
+@app.route('/led_blink_off', methods=['POST'])
+def led_blink_off():
+    if parallel_thread is not None:
+        if parallel_thread.isAlive()
+            parallel_thread.join()
+
+    return "ok"
 
 
 @app.route('/led_on', methods=['POST'])

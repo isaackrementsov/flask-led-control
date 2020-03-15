@@ -1,4 +1,5 @@
 var button = $('.led_button');
+var blinking = $('#blinking');
 
 button.click(function(){
     let this_button = $(this);
@@ -20,6 +21,28 @@ button.click(function(){
             success: response => {
                 console.log(response);
                 this_button.text(id + ' LED On');
+            }
+        });
+    }
+});
+
+blinking.click(function(){
+    if(blinking.text() == 'Blinking'){
+        $.ajax({
+            url: '/led_blink',
+            type: 'post',
+            success: response => {
+                console.log(response);
+                blinking.text('Stop Blinking')
+            }
+        })
+    }else{
+        $.ajax({
+            url: '/led_blink_off',
+            type: 'post',
+            success: response => {
+                console.log(response);
+                blinking.text('Blinking');
             }
         });
     }
