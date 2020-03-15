@@ -1,3 +1,5 @@
+// Blinking code is included from lines 33-57
+
 var button = $('.led_button');
 var blinking = $('#led_blink');
 
@@ -28,6 +30,7 @@ button.click(function(){
     }
 });
 
+// Blinking code
 blinking.click(function(){
     if(blinking.text() == 'Blinking'){
         $.ajax({

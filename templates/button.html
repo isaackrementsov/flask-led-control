@@ -3,12 +3,15 @@
     <head>
         <meta charset="utf-8">
         <title>{{title}}</title>
+
+        <!-- Bootstrap and custom styles included -->
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/static/main.css">
+
     </head>
     <body>
       <div class="container row">
-	<div class="card">	  
+	<div class="card">
 	  <div class="row">
 	    <h1>{{name}}'s LED Control</h1>
 	  </div>
@@ -16,6 +19,7 @@
 	  <div class="row">
             <button id="Red" class="led_button">Red LED On</button>
             <button id="Yellow" class="led_button">Yellow LED On</button>
+            <!-- Here is the blinking button, which is dealt with in JS -->
             <button id="led_blink">Blinking</button>
 	  </div>
 	</div>
