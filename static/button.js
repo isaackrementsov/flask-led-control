@@ -1,5 +1,5 @@
 var button = $('.led_button');
-var blinking = $('#blinking');
+var blinking = $('#led_blink');
 
 button.click(function(){
     let this_button = $(this);

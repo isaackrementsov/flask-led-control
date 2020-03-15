@@ -1,4 +1,5 @@
 import time
+import threading
 import RPi.GPIO as GPIO
 from flask import Flask, render_template, request
 
@@ -18,29 +19,38 @@ parallel_thread = None
 
 
 def alternate_leds(red_pin, yellow_pin):
-    while(True):
+    this_thread = threading.currentThread()
+
+    while getattr(this_thread, "continue_running", True):
+        time.sleep(0.25)
+        
         GPIO.output(red_pin, GPIO.HIGH)
         GPIO.output(yellow_pin, GPIO.LOW)
 
-        time.sleep(2)
+        time.sleep(0.25)
 
         GPIO.output(red_pin, GPIO.LOW)
         GPIO.output(yellow_pin, GPIO.HIGH)
 
+    GPIO.output(yellow_pin, GPIO.LOW)
+        
 
 @app.route('/led_blink', methods=['POST'])
 def led_blink():
-    if not parallel_thread.isAlive():
-            parallel_thread = Thread(target=alternate_leds, kwargs={'red_pin': RED_PIN, 'yellow_pin': YELLOW_PIN})
-
+    global parallel_thread
+    parallel_thread = threading.Thread(target=alternate_leds, kwargs={'red_pin': RED_PIN, 'yellow_pin': YELLOW_PIN})
+    parallel_thread.start()
+    
     return "ok"
 
 
 @app.route('/led_blink_off', methods=['POST'])
 def led_blink_off():
+    global parallel_thread
+    
     if parallel_thread is not None:
-        if parallel_thread.isAlive()
-            parallel_thread.join()
+        parallel_thread.continue_running = False
+        parallel_thread.join()
 
     return "ok"
 
