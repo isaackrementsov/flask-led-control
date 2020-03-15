@@ -16,7 +16,7 @@ GPIO.setup(YELLOW_PIN, GPIO.OUT)
 app = Flask(__name__)
 
 
-@app.route('/led_on/:color', methods=['POST'])
+@app.route('/led_on', methods=['POST'])
 def led_on():
     color = request.values.get('color')
 
@@ -28,7 +28,7 @@ def led_on():
     return 'ok'
 
 
-@app.route('/led_off/:color', methods=['POST'])
+@app.route('/led_off', methods=['POST'])
 def led_off():
     color = request.values.get('color')
 
