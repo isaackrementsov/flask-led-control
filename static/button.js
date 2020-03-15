@@ -11,6 +11,7 @@ button.click(function(){
             type: 'post',
             success: response => {
                 console.log(response);
+		this_button.addClass('active');
                 this_button.text(id + ' LED Off');
             }
         });
@@ -20,6 +21,7 @@ button.click(function(){
             type: 'post',
             success: response => {
                 console.log(response);
+		this_button.removeClass('active');
                 this_button.text(id + ' LED On');
             }
         });
@@ -33,7 +35,8 @@ blinking.click(function(){
             type: 'post',
             success: response => {
                 console.log(response);
-                blinking.text('Stop Blinking')
+		blinking.addClass('active');
+                blinking.text('Stop Blinking');
             }
         })
     }else{
@@ -42,6 +45,7 @@ blinking.click(function(){
             type: 'post',
             success: response => {
                 console.log(response);
+		blinking.removeClass('active');
                 blinking.text('Blinking');
             }
         });
